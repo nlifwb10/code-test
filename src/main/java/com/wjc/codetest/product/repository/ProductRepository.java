@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Page<Product> findAllByCategory(String name, Pageable pageable);
+   // Page<Product> findAllByCategoryContaining(String name, Pageable pageable);
 
     @Query("SELECT DISTINCT p.category FROM Product p")
     List<String> findDistinctCategories();

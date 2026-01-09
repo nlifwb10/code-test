@@ -1,15 +1,17 @@
 package com.wjc.codetest.product.controller;
 
+import com.wjc.codetest._support.common.CustomResponse;
 import com.wjc.codetest.product.model.request.CreateProductRequest;
 import com.wjc.codetest.product.model.request.GetProductListRequest;
 import com.wjc.codetest.product.model.domain.Product;
 import com.wjc.codetest.product.model.request.UpdateProductRequest;
-import com.wjc.codetest.product.model.response.ProductListResponse;
+import com.wjc.codetest.product.model.response.ProductResponse;
 import com.wjc.codetest.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,9 +54,8 @@ public class ProductController {
 
     @Operation(summary = "제품 목록조회", description = "제품목록을 조회한다.")
     @GetMapping
-    public ResponseEntity<ProductListResponse> getProductListByCategory(GetProductListRequest dto){
-        Page<Product> productList = productService.getListByCategory(dto);
-        return ResponseEntity.ok(new ProductListResponse(productList.getContent(), productList.getTotalPages(), productList.getTotalElements(), productList.getNumber()));
+    public CustomResponse<List<ProductResponse>> getProductListByCategory(@ParameterObject GetProductListRequest request, @ParameterObject Pageable pageable){
+         return productService.getListByCategory(request,pageable);
     }
 
     @Operation(summary = "제품별 category 목록조회", description = "제품별 category 를 조회한다.")

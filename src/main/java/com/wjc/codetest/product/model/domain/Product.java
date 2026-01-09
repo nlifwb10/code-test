@@ -1,12 +1,14 @@
 package com.wjc.codetest.product.model.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
     @Id
@@ -20,19 +22,9 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    protected Product() {
-    }
-
     public Product(String category, String name) {
         this.category = category;
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public String getName() {
-        return name;
-    }
 }
