@@ -14,6 +14,12 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
    // Page<Product> findAllByCategoryContaining(String name, Pageable pageable);
+    
+    // 수정시 Check 로직 자기자신은 제외
+    boolean existsByCategoryAndNameAndIdNot(String category, String name, Long id);
+    
+    // 등록시 저장로직
+    boolean existsByCategoryAndName(String category, String name);
 
     @Query("SELECT DISTINCT p.category FROM Product p")
     List<String> findDistinctCategories();

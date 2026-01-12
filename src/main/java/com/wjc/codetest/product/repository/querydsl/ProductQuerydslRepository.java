@@ -35,13 +35,13 @@ public class ProductQuerydslRepository extends QuerydslRepositorySupport {
                         product.name
                 ))
                 .from(product)
-                .where(containsCategoryName(request.getCategory()));
+                .where(containsCategoryName(request.category()));
 
         // 전체 갯수
         JPAQuery<Long> countQuery = getQueryFactory()
                 .select(product.id.count())
                 .from(product)
-                .where(containsCategoryName(request.getCategory()));
+                .where(containsCategoryName(request.category()));
 
         return PageableExecutionUtils.getPage(getQuerydsl().applyPagination(pageable, contentQuery).fetch(),pageable,countQuery::fetchOne);
     }

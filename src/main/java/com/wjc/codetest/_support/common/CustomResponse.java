@@ -18,22 +18,25 @@ public record CustomResponse<T>(
         @Schema(title = "응답코드", example = "200")
         Integer code,
         @Schema(title = "에러메시지",example = "에러 내용")
-        String message,
+        String errMessage,
         @Schema(title = "데이터")
         T data,
         @Schema(title = "페이지 Meta 데이터" )
         PageMeta page //
 ) {
 
+    /**
+     * 리스트 공통함수 ( 페이징 처리 X 일 경우 )
+     * @param data 조회 리스트 객체
+     * @return 조회 데이터 값과 공통 응답객체
+     */
     public static <T> CustomResponse<T> ok(T data) {
         return new CustomResponse<>(true, HttpStatus.OK.value(), null, data, null);
     }
 
     /**
      * 페이징 리스트 공통 함수
-     * @param page 페이징 조회 결과 객체
-     * @param pageableQuery 현재 페이지 번호 및 페이지 사이즈 정보를 담고 있는 조회 조건 객체
-     * @param <T> 페이징 대상 데이터의 타입
+     * @param page<T> 페이징 조회 결과 객체
      * @return 페이징 데이터 목록과 페이지 메타 정보를 포함한 공통 응답 객체
      */
     public static <T> CustomResponse<List<T>> pageResponse(Page<T> page) {
@@ -44,5 +47,15 @@ public record CustomResponse<T>(
                 page.getContent(),
                 PageMeta.of(page.getTotalElements(), page.getNumber(), page.getSize())
         );
+    }
+
+    /**
+     * 실패 에러 공통 함수
+     * @param httpStatus HTTP 상태 코드 (예: 400, 404, 500 등)
+     * @param errMessage 클라이언트에게 전달할 에러 메시지
+     * @return 실패 상태를 나타내는 공통 응답 객체
+     */
+    public static <T> CustomResponse<T> failed(HttpStatus httpStatus, String errMessage) {
+        return new CustomResponse<>(false,httpStatus.value(),errMessage,null,null);
     }
 }

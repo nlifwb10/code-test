@@ -1,5 +1,7 @@
 package com.wjc.codetest.product.model.response;
 
+import lombok.Builder;
+
 /**
  * <p>
  *
@@ -9,5 +11,5 @@ package com.wjc.codetest.product.model.response;
  * @since : 2025-10-27
  */
 
-
+@Builder
 public record ProductResponse(Long id , String category , String name ) {}

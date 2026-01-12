@@ -1,21 +1,8 @@
 package com.wjc.codetest.product.model.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-public class CreateProductRequest {
-    private String category;
-    private String name;
 
-    public CreateProductRequest(String category) {
-        this.category = category;
-    }
-
-    public CreateProductRequest(String category, String name) {
-        this.category = category;
-        this.name = name;
-    }
-}
-
+public record CreateProductRequest(@Parameter(description = "카테고리 명", example = "기아") @NotBlank String category,
+                                   @Parameter(description = "이름", example = "기아자동차1") @NotBlank String name) {}
